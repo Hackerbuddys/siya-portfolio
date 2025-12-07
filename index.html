@@ -494,7 +494,7 @@ Purchase:
 										<div class="col-lg-6 col-md-4 col-sm-12 col-12 align-self-center newyork-responsive-screennone">
 											<div class="education_mleft education_left ">
 												<div class="edu_mainyear edu_leftyear">
-													<h1>2019</h1>
+													<h1>2021</h1>
 												</div>	
 											</div>
 										</div>
@@ -507,7 +507,7 @@ Purchase:
 										<div class="col-lg-6 col-md-4 col-sm-12 col-12 align-self-center">
 											<div class="education_mleft education_left ">
 												<div class="edu_mainyear edu_leftyear">
-													<h1>2017</h1>
+													<h1>2019</h1>
 												</div>	
 											</div>
 										</div>
@@ -925,55 +925,59 @@ Purchase:
 
 					<div class="col-12">
 						<div class="port_contact_form">
-							
-							<!-- UPDATE FORM ACTION HERE -->
-							<form action="send_mail.php" method="POST">
+							<!-- EMAILJS FORM (no action / method needed) -->
+							<form id="contact-form">
 								<div class="row">
 
 									<div class="col-sm-6">
 										<div class="form-group">
-											<input type="text" name="first_name" class="form-control require" id="name" placeholder="First Name" required>
+											<input type="text" name="first_name" class="form-control require" id="name"
+												placeholder="First Name" required>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
 										<div class="form-group">
-											<input type="text" name="last_name" class="form-control require" id="last-name" placeholder="Last Name" required>
+											<input type="text" name="last_name" class="form-control require" id="last-name"
+												placeholder="Last Name" required>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
 										<div class="form-group">
-											<input type="email" name="email" class="form-control require" id="email" placeholder="Email Address" required>
+											<input type="email" name="email" class="form-control require" id="email"
+												placeholder="Email Address" required>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
 										<div class="form-group">
-											<input type="text" name="subject" class="form-control require" id="subject" placeholder="Subject" required>
+											<input type="text" name="subject" class="form-control require" id="subject"
+												placeholder="Subject" required>
 										</div>
 									</div>
 
 									<div class="col-12">
 										<div class="form-group">
-											<textarea name="message" class="form-control require" rows="3" id="comment" placeholder="Message" required></textarea>
+											<textarea name="message" class="form-control require" rows="3" id="comment"
+												placeholder="Message" required></textarea>
 										</div>
 									</div>
 
 									<div class="col-12">
 										<div class="banner_btn">
-											<button type="submit" name="submit" class="portfolio_btn btn_red submitForm">
+											<button type="submit" class="portfolio_btn btn_red submitForm" id="contact-submit-btn">
 												<span class="first_text">Submit</span>
 												<span class="second_text">Send</span>
 											</button>
 										</div>
 									</div>
 
-									<div class="response"></div>
+									<div class="response" id="contact-response"></div>
 
 								</div>
 							</form>
-							
+							<!-- /EMAILJS FORM -->
 						</div>
 					</div>
 
@@ -982,6 +986,7 @@ Purchase:
 		</div>
 	</div>
 </div><!-- End Contact section  -->
+
 
 
 			<div class="port_footer_setions ">
@@ -1221,6 +1226,48 @@ Purchase:
 	<script src="assets/js/jquery-jvectormap-world-mill.js"></script>
 	<script src="assets/js/scrollbar.js"></script>
 	<script src="assets/js/custom.js"></script>
+	<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // Initialize EmailJS with your Public Key
+  (function() {
+    emailjs.init("nBjrYzI3l7d3dXw5L"); // Public Key
+  })();
+
+  // Handle form submit
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contact-form");
+    const btn  = document.getElementById("contact-submit-btn");
+    const resp = document.getElementById("contact-response");
+
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // optional: disable button while sending
+      btn.disabled = true;
+      btn.classList.add("disabled");
+      resp.innerHTML = "Sending your message...";
+
+      emailjs
+        .sendForm("service_prjulre", "template_1w41ykh", this)
+        .then(function () {
+          resp.innerHTML = "✅ Thank you! Your message has been sent.";
+          form.reset();
+        })
+        .catch(function (error) {
+          console.error("EmailJS error:", error);
+          resp.innerHTML = "❌ Oops! Something went wrong. Please try again.";
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.classList.remove("disabled");
+        });
+    });
+  });
+</script>
+
 </body>
 
 </html>

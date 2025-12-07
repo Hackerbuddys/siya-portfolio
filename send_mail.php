@@ -1,28 +1,35 @@
 <?php
-if(isset($_POST['submit'])){
-
-    $to = "hey.siya01@gmail.com";  // Your email
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-
-    $fullMessage = "
-    Name: $first_name $last_name
-    Email: $email
-    Subject: $subject
-
-    Message:
-    $message
-    ";
-
-    $headers = "From: $email";
-
-    if(mail($to, $subject, $fullMessage, $headers)){
-        echo "<script>alert('Thank you! Your message has been sent successfully.'); window.history.back();</script>";
-    } else {
-        echo "<script>alert('Message sending failed. Please try again.'); window.history.back();</script>";
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo "Method Not Allowed";
+    exit;
 }
-?>
+
+$to      = "hey.siya01@gmail.com";
+$first   = trim($_POST['first_name'] ?? '');
+$last    = trim($_POST['last_name'] ?? '');
+$email   = trim($_POST['email'] ?? '');
+$subject = trim($_POST['subject'] ?? 'Portfolio Contact Form');
+$message = trim($_POST['message'] ?? '');
+
+if (!$first || !$email || !$message) {
+    echo "Please fill all required fields.";
+    exit;
+}
+
+$full_subject = "Portfolio Contact: " . $subject;
+
+$body  = "New message from your portfolio website:\n\n";
+$body .= "Name: {$first} {$last}\n";
+$body .= "Email: {$email}\n";
+$body .= "Subject: {$subject}\n\n";
+$body .= "Message:\n{$message}\n";
+
+$headers  = "From: {$first} {$last} <{$email}>\r\n";
+$headers .= "Reply-To: {$email}\r\n";
+
+if (mail($to, $full_subject, $body, $headers)) {
+    echo "Thank you! Your message has been sent.";
+} else {
+    echo "Sorry, something went wrong. Please try again later.";
+}
