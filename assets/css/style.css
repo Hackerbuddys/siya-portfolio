@@ -28,6 +28,9 @@ Assigned to: ThemeForest
 
 --------------------------------------------------------------------*/
 /* ================== 01 body start ================== */
+html {
+  scroll-behavior: smooth;
+}
 body {
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;

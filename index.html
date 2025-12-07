@@ -32,7 +32,7 @@ Purchase:
 	<!-- Favicon Link -->
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
 
-	<title>Portfolio Responsive HTML Template</title>
+	<title>Portfolio</title>
 </head>
 
 <body>
@@ -56,7 +56,7 @@ Purchase:
 				<ul class="nav_list">
 					<li data-number="0">
 						<div class="tooltip_box">
-							<a href="javascript:;" class="siderbar_menuicon">
+							<a href="#scroll_about" class="siderbar_menuicon">
 								<span class="first_micon">
 									<svg class="nav_about_svg" xmlns="http://www.w3.org/2000/svg"
 										xmlns:xlink="http://www.w3.org/1999/xlink" width="26px" height="26px">
@@ -102,7 +102,7 @@ Purchase:
 					</li>
 					<li data-number="1">
 						<div class="tooltip_box">
-							<a href="" class="siderbar_menuicon">
+							<a href="#scroll_education" class="siderbar_menuicon">
 								<span class="first_micon">
 									<svg class="nav__portfolio_svg" xmlns="http://www.w3.org/2000/svg"
 										xmlns:xlink="http://www.w3.org/1999/xlink" width="26px" height="25px">
@@ -118,12 +118,12 @@ Purchase:
 									</svg>
 								</span>
 							</a>
-							<span class="menu_tooltip">Portfolio</span>
+							<span class="menu_tooltip">Education</span>
 						</div>
 					</li>
 					<li data-number="2">
 						<div class="tooltip_box">
-							<a href="" class="siderbar_menuicon">
+							<a href="#scroll_experience" class="siderbar_menuicon">
 								<span class="first_micon">
 									<svg class="nav_quotes_svg" xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 508.044 508.044">
@@ -155,12 +155,12 @@ Purchase:
 									</svg>
 								</span>
 							</a>
-							<span class="menu_tooltip">Testimonial</span>
+							<span class="menu_tooltip">Experience</span>
 						</div>
 					</li>
 					<li data-number="3">
 						<div class="tooltip_box">
-							<a href="" class="siderbar_menuicon">
+							<a href="#scroll_contact" class="siderbar_menuicon">
 								<span class="first_micon">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480.56 480.56"
 										class="nav_contact_svg" width="20px" height="20px">
@@ -326,7 +326,7 @@ Purchase:
 	<div class="port_sec_warapper">
 		<div class="port_about_setions  page_scroll" data-scroll="0" id="about_sec">
 			<!-- start about section  -->
-			<div class="selfintro_section">
+			<div class="selfintro_section" id="scroll_about">
 				<div class="container">
 					<div class="row">
 						<div class="col-xl-5 col-lg-12 col-md-12">
@@ -416,7 +416,7 @@ Purchase:
 		</div> <!-- End about section  -->
 		<div class="port_education_setions  ">
 			<!-- start Education section  -->
-			<div class="education_section">
+			<div class="education_section" id="scroll_education">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
@@ -590,7 +590,7 @@ Purchase:
 
 <div class="port_experience_setions">
 	<!-- start Experience section  -->
-	<div class="experience_section">
+	<div class="experience_section" id="scroll_experience">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -885,7 +885,7 @@ Purchase:
 
 
 		<!-- start contact wrapper  -->
-		<div class="port_contact_wrapper  page_scroll" data-scroll="3" id="contact_sec">
+		<div class="port_contact_wrapper  page_scroll" data-scroll="3" id="scroll_contact">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -1264,6 +1264,22 @@ Purchase:
           btn.disabled = false;
           btn.classList.remove("disabled");
         });
+    });
+  });
+</script>
+
+<script>
+  document.querySelectorAll('.port_sidebar_nav a.siderbar_menuicon').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      const target = this.getAttribute('href');
+      // only handle real anchors like #scroll_education
+      if (target && target.startsWith('#')) {
+        e.preventDefault();
+        const el = document.querySelector(target);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     });
   });
 </script>
